@@ -1,9 +1,10 @@
 FROM wordpress:php7.3-fpm-alpine
 
-RUN apk update
-RUN apk add shadow
+ARG HOST_GID
+ARG HOST_UID
 
-RUN groupmod -g 1000 www-data \
-  && usermod -u 1000 www-data \
+RUN apk update \
+  && apk add shadow \
+  && groupmod -g ${HOST_GID} www-data \
+  && usermod -u ${HOST_UID} www-data \
   && chown -R www-data:www-data /usr/src/wordpress
-
